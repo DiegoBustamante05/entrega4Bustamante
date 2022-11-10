@@ -78,22 +78,17 @@ routerProducts.delete('/:id', async (req, res) => {
 
 routerProducts.put('/:id', async (req, res) => {
     try {
-        const {
-            id
-        } = req.params;
+        const id = req.params.id;
         const {
             title,
             price,
             thumbnail
         } = req.body;
-        await container.updateById(title, price, thumbnail, id);
-        res.json({
-            succes: true
-        });
+        await container.updateById(id, title, price, thumbnail);
+        res.json('producto actualizado');
     } catch (error) {
         res.json({
-            error: true,
-            msj: 'error'
+            error: 'producto no encontrado'
         });
     }
 });

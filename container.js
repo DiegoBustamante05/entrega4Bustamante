@@ -67,25 +67,26 @@ class Container {
     };
     updateById = async (id, title, price, thumbnail) => {
         try {
-            const products = await this.getAll();
-            const item = products.find((prod) => prod.id === Number(id));
+            const productos = await this.getAll();
+            const item = productos.find((prod) => prod.id == id);
             if (item) {
                 item.title = title;
                 item.price = price;
                 item.thumbnail = thumbnail;
                 console.log(item);
-                await fs.promises.writeFile(this.filePath, JSON.stringify(products, null, 2));
+                await fs.promises.writeFile(
+                    "./productos.json",
+                    JSON.stringify(productos, null, 2)
+                );
                 return item;
             } else {
-                return {
-                    error: 'Product not found'
-                };
+                return { error: "Producto no encontrado" };
             }
         } catch (error) {
-            throw new Error(error);
+            console.log(error);
         }
     };
-}
+};
 
 
 

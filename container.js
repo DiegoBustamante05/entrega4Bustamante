@@ -80,7 +80,7 @@ class Container {
                 );
                 return item;
             } else {
-                return { error: "Producto no encontrado" };
+                return { error: "product not found" };
             }
         } catch (error) {
             console.log(error);

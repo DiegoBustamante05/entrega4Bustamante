@@ -76,19 +76,26 @@ routerProducts.delete('/:id', async (req, res) => {
     }
 });
 
+
+
 routerProducts.put('/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const {
-            title,
-            price,
-            thumbnail
-        } = req.body;
-        await container.updateById(id, title, price, thumbnail);
-        res.json('producto actualizado');
-    } catch (error) {
+    const id = req.params.id;
+    const {
+        title,
+        price,
+        thumbnail
+    } = req.body;
+    const products = await container.updateById(id, title, price, thumbnail);
+    res.json('updated product');
+    if (id > products.length) {
         res.json({
-            error: 'producto no encontrado'
+            error: 'This product was not found',
+            productList: products,
+        });
+    } else {
+        res.json({
+            success: true,
+            msg: 'This product was updated',
         });
     }
 });

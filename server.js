@@ -80,22 +80,14 @@ routerProducts.delete('/:id', async (req, res) => {
 
 routerProducts.put('/:id', async (req, res) => {
     const id = req.params.id;
-    const {
-        title,
-        price,
-        thumbnail
-    } = req.body;
-    const products = await container.updateById(id, title, price, thumbnail);
-    res.json('updated product');
-    if (id > products.length) {
-        res.json({
-            error: 'This product was not found',
-            productList: products,
-        });
+    const { title, price, thumbnail }= req.body;
+    const productos = await container.getAll();
+    const indice = productos.findIndex((product) => product.id == id);
+    if (indice >= 0) {
+    console.log("el indice es " + indice) 
+    await container.updateById(id, title, price, thumbnail)
+    res.json({ success: true, msg: 'actualizado' });
     } else {
-        res.json({
-            success: true,
-            msg: 'This product was updated',
-        });
+    res.json({ error: true, msg: 'no encontrado' });
     }
 });
